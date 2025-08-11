@@ -1,20 +1,21 @@
 import { API_ROOT_V1 } from "@/shared/constants/config";
 import { apiClient } from "@/bff/lib/api-client";
 import { networkErrorResponse } from "@/bff/lib/response";
+import { RouteCtx } from "@/bff/types/bff";
 
-type Params = { params: { id: string } };
-
-export async function GET(request: Request, { params }: Params) {
+export async function GET(request: Request, { params }: RouteCtx) {
   try {
-    return await apiClient(`${API_ROOT_V1}/history-set/${params.id}/`);
+    const { id } = await params;
+    return await apiClient(`${API_ROOT_V1}/history-set/${id}/`);
   } catch (error) {
     return networkErrorResponse(error);
   }
 }
 
-export async function DELETE(request: Request, { params }: Params) {
+export async function DELETE(request: Request, { params }: RouteCtx) {
   try {
-    return await apiClient(`${API_ROOT_V1}/history-set/${params.id}/`, {
+    const { id } = await params;
+    return await apiClient(`${API_ROOT_V1}/history-set/${id}/`, {
       method: "DELETE",
     });
   } catch (error) {
@@ -22,10 +23,11 @@ export async function DELETE(request: Request, { params }: Params) {
   }
 }
 
-export async function PATCH(request: Request, { params }: Params) {
+export async function PATCH(request: Request, { params }: RouteCtx) {
   try {
     const { title } = await request.json();
-    return await apiClient(`${API_ROOT_V1}/history-set/${params.id}/`, {
+    const { id } = await params;
+    return await apiClient(`${API_ROOT_V1}/history-set/${id}/`, {
       method: "PUT",
       body: { title },
     });

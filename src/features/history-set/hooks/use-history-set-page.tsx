@@ -1,5 +1,5 @@
-import { HistorySetResponse } from "@/features/transcript/types/transcript";
-import { useEffect, useState } from "react";
+import { HistorySetResponse } from "@/features/history-set/types/history-set";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ResponseError } from "@/client/types/api";
 import { listHistorySetService } from "@/features/history-set/services/history-set-services";
@@ -10,7 +10,7 @@ export const useHistorySetPage = () => {
     []
   );
 
-  const fetch = async () => {
+  const fetch = useCallback(async () => {
     if (isLoading) return;
     setIsLoading(true);
 
@@ -36,7 +36,7 @@ export const useHistorySetPage = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [isLoading]);
 
   const breadcrumbItems = [
     { label: "Home", href: "/" },
@@ -45,7 +45,7 @@ export const useHistorySetPage = () => {
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [fetch]);
 
   return { historySetList, isLoading, fetch, breadcrumbItems };
 };

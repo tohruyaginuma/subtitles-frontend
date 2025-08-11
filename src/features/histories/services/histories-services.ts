@@ -1,5 +1,5 @@
 import { ApiEnvelope } from "@/client/types/api";
-import { HistoryResponse } from "@/features/transcript/types/transcript";
+import { HistoryResponse } from "@/features/histories/types/histories";
 import { API_ROUTES } from "@/client/constants/api";
 import { apiClient } from "@/client/lib/api";
 

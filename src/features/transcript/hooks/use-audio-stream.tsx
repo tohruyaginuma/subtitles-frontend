@@ -75,10 +75,13 @@ export const useAudioStream = () => {
     const processor = audioContext.createScriptProcessor(4096, 1, 1);
 
     processor.onaudioprocess = (e) => {
-      const input = e.inputBuffer.getChannelData(0); // Float32 [-1.0, 1.0]
-      const int16 = convertFloat32ToInt16(input); // Int16 PCM
+      const input = e.inputBuffer.getChannelData(0);
+      const int16 = convertFloat32ToInt16(input); // Int16Array
 
-      setAudioData(int16.buffer);
+      const arr = int16.slice();
+      const ab: ArrayBuffer = arr.buffer;
+
+      setAudioData(ab);
     };
 
     source.connect(processor);

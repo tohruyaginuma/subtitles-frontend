@@ -1,6 +1,6 @@
 import { apiClient } from "@/client/lib/api";
 import { ApiEnvelope } from "@/client/types/api";
-import { HistorySetResponse } from "@/features/transcript/types/transcript";
+import { HistorySetResponse } from "@/features/history-set/types/history-set";
 import { API_ROUTES } from "@/client/constants/api";
 import { DeleteResponse } from "@/client/types/api";
 

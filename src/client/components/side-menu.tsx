@@ -19,7 +19,6 @@ import { cn } from "@/client/lib/utils";
 import { Flex } from "@/client/components/flex";
 import { useUserStore } from "@/features/auth/me/stores/use-user-store";
 import { VERSION } from "@/shared/constants/config";
-import { refreshTokenService } from "@/features/auth/token/services/refresh-token-services";
 
 const menuItems = [
   {
