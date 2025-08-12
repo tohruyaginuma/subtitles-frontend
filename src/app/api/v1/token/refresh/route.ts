@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { getServerEnv } from "@/shared/constants/config";
 import { NextResponse } from "next/server";
 import {

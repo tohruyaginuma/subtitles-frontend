@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { getServerEnv } from "@/shared/constants/config";
 import { apiClient } from "@/bff/lib/api-client";
 import { networkErrorResponse } from "@/bff/lib/response";
