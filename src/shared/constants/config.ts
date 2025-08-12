@@ -9,8 +9,13 @@ console.log("VERSION", VERSION);
 
 export function getServerEnv() {
   const API_ROOT = process.env.API_ROOT ?? "http://127.0.0.1:8000";
-  const API_ROOT_V1 = process.env.API_ROOT_V1 ?? `${API_ROOT}/v1`;
+  const API_ROOT_V1 = `${API_ROOT}/v1`;
   const NODE_ENV = process.env.NODE_ENV ?? "production";
+
+  console.log("API_ROOT", API_ROOT);
+  console.log("API_ROOT_V1", API_ROOT_V1);
+  console.log("NODE_ENV", NODE_ENV);
+
   return {
     API_ROOT,
     API_ROOT_V1,
