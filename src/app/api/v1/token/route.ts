@@ -1,4 +1,4 @@
-import { API_ROOT_V1 } from "@/shared/constants/config";
+import { getServerEnv } from "@/shared/constants/config";
 import { NextResponse } from "next/server";
 import {
   ACCESS_TOKEN_KEY,
@@ -10,6 +10,7 @@ import { apiClient } from "@/bff/lib/api-client";
 
 export async function POST(request: Request) {
   const { email, password } = await request.json();
+  const { API_ROOT_V1 } = getServerEnv();
 
   try {
     const response = await apiClient(`${API_ROOT_V1}/token/`, {

@@ -1,4 +1,4 @@
-import { API_ROOT_V1 } from "@/shared/constants/config";
+import { getServerEnv } from "@/shared/constants/config";
 import { NextResponse } from "next/server";
 import {
   ACCESS_TOKEN_KEY,
@@ -17,6 +17,7 @@ import { apiClient } from "@/bff/lib/api-client";
 export async function POST() {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get(REFRESH_TOKEN_KEY)?.value;
+  const { API_ROOT_V1 } = getServerEnv();
 
   if (!refreshToken) {
     return NextResponse.json(
