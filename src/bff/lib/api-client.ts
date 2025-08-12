@@ -23,6 +23,8 @@ export const apiClient = async (
   const { method = "GET", body, requireAuth = true } = options;
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
+    Accept: "application/json",
+    "Accept-Encoding": "identity",
   };
 
   if (requireAuth) {
