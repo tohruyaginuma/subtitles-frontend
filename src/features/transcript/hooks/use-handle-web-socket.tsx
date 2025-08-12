@@ -1,8 +1,8 @@
 import { useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import { WS_ROOT } from "@/shared/constants/config";
+import { CLIENT_WS_ROOT } from "@/shared/constants/config";
 
-const WS_URL = `${WS_ROOT}/ws/transcribe/`;
+const WS_URL = `${CLIENT_WS_ROOT}/ws/transcribe/`;
 
 type UseHandleWebSocketProps = {
   onOpen: (event: WebSocketEventMap["open"]) => void;

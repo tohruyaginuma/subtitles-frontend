@@ -1,4 +1,6 @@
-import { IS_DEV } from "@/shared/constants/config";
+import { getServerEnv } from "@/shared/constants/config";
+
+const { IS_DEV } = getServerEnv();
 
 export const ACCESS_TOKEN_KEY = "access_token";
 export const REFRESH_TOKEN_KEY = "refresh_token";
