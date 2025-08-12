@@ -13,14 +13,14 @@ import { apiClient } from "@/bff/lib/api-client";
 export async function POST(request: Request) {
   const { email, password } = await request.json();
   const { API_ROOT_V1 } = getServerEnv();
-
+  console.log("BFF login start ----");
   try {
     const response = await apiClient(`${API_ROOT_V1}/token/`, {
       method: "POST",
       body: { email, password },
       requireAuth: false,
     });
-
+    console.log("BFF login end ----");
     const responseData = await response.json();
     const { access, refresh } = responseData.data;
 
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       responseNext.cookies.set(ACCESS_TOKEN_KEY, access, COOKIE_OPTIONS);
       responseNext.cookies.set(REFRESH_TOKEN_KEY, refresh, COOKIE_OPTIONS);
     }
-
+    console.log("BFF cookie set ----");
     return responseNext;
   } catch (error) {
     return networkErrorResponse(error);
