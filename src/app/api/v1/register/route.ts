@@ -5,7 +5,7 @@ import { apiClient } from "@/bff/lib/api-client";
 export async function POST(request: Request) {
   const { email, password } = await request.json();
   const { API_ROOT_V1 } = getServerEnv();
-
+  console.log("API_ROOT_V1:", API_ROOT_V1);
   try {
     return await apiClient(`${API_ROOT_V1}/register/`, {
       method: "POST",
