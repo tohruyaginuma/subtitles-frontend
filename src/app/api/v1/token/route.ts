@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     const responseNext = NextResponse.json(responseData, {
       status: response.status,
     });
-
+    console.log("BFF login responseNext ----", responseNext);
     if (response.ok && access && refresh) {
       responseNext.cookies.set(ACCESS_TOKEN_KEY, access, COOKIE_OPTIONS);
       responseNext.cookies.set(REFRESH_TOKEN_KEY, refresh, COOKIE_OPTIONS);
@@ -35,6 +35,7 @@ export async function POST(request: Request) {
     console.log("BFF cookie set ----");
     return responseNext;
   } catch (error) {
+    console.log("BFF login error ----", error);
     return networkErrorResponse(error);
   }
 }
