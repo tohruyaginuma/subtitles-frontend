@@ -22,11 +22,7 @@ import { VERSION } from "@/shared/constants/config";
 
 const menuItems = [
   {
-    label: "About Subtitles",
-    href: "/about",
-  },
-  {
-    label: "Live Subtitles",
+    label: "Live Subtitle",
     href: "/",
   },
   {

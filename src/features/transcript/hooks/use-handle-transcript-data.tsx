@@ -1,12 +1,14 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { createHistorySetService } from "@/features/history-set/services/history-set-services";
 import dayjs from "dayjs";
 import { DATE_FORMAT } from "@/client/constants/global";
 import { toast } from "sonner";
 import { createHistoryService } from "@/features/histories/services/histories-services";
+import { useHistoryHandleStore } from "../stores/use-history-handle";
 
 export const useHandleTranscriptData = () => {
-  const [historySetId, setHistorySetId] = useState<string | null>(null);
+  const { historySetId, setHistorySetId, resetHistorySetId } =
+    useHistoryHandleStore();
 
   const createHistorySet = useCallback(async (_title?: string) => {
     try {
@@ -19,9 +21,7 @@ export const useHandleTranscriptData = () => {
       }
 
       if (data) {
-        console.log("data", data);
         setHistorySetId(data.id);
-
         return data.id;
       }
     } catch (error) {
@@ -62,10 +62,8 @@ export const useHandleTranscriptData = () => {
   );
 
   const initializeHistorySetId = useCallback(async () => {
-    if (historySetId) {
-      setHistorySetId(null);
-    }
-  }, [historySetId]);
+    resetHistorySetId();
+  }, []);
 
   return {
     createHistorySet,

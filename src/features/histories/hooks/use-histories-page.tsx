@@ -75,7 +75,7 @@ export const useHistoriesPage = (historySetId: string) => {
 
   useEffect(() => {
     fetch();
-  }, [fetch]);
+  }, []);
 
   return {
     isLoadingHistorySet,

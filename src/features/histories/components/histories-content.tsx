@@ -56,15 +56,17 @@ export const HistoriesContent = ({
             ))
           ) : (
             <>
-              {histories &&
-                histories.length > 0 &&
+              {histories && histories.length > 0 ? (
                 histories.map((history: HistoryResponse, index: number) => (
                   <SubtitleLog
                     sentence={history.content}
                     key={index}
                     hasBackground={index % 2 === 0}
                   />
-                ))}
+                ))
+              ) : (
+                <SubtitleLog sentence={"No histories"} hasBackground={false} />
+              )}
             </>
           )}
         </Flex>

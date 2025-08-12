@@ -36,7 +36,7 @@ export const useHistorySetPage = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading]);
+  }, []);
 
   const breadcrumbItems = [
     { label: "Home", href: "/" },
