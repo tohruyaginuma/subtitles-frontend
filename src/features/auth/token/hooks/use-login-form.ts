@@ -28,16 +28,17 @@ export function useLoginForm() {
     };
 
     try {
+      console.log("start login");
       const { error: loginErr } = await loginService(
         values.email,
         values.password
       );
-
+      console.log("end login");
       if (loginErr) {
         fail(loginErr.message ?? "Login failed.");
         return;
       }
-
+      console.log("start me");
       const { data: meData, error: meError } = await meService();
 
       if (meError || !meData?.email) {
@@ -45,8 +46,10 @@ export function useLoginForm() {
         return;
       }
 
+      console.log("end me");
+      console.log("start login2");
       login({ email: meData.email });
-
+      console.log("end login2");
       onClose();
       toast.success("Login successful.");
     } catch (e) {
