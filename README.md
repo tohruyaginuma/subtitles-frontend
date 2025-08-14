@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎤 Subtitles - Live Transcription App — Frontend
 
-## Getting Started
+This is the **frontend** of the Live Transcription Application called **Subtitles**.  
+It captures audio (English only) directly from the browser, streams it to the backend via **WebSockets**, and displays **live transcriptions** in real time.
 
-First, run the development server:
+## 🔗 Links
+
+- **App:** [https://subtitles-frontend-production.up.railway.app/](https://subtitles-frontend-production.up.railway.app/)
+- **Frontend Code:** This repository
+- **Backend Code:** [https://github.com/tohruyaginuma/subtitles-backend](https://github.com/tohruyaginuma/subtitles-backend)
+
+## 💡 Motivation
+
+The Subtitles app was created to help English learners, especially those learning it as a second language, check and understand spoken English quickly and easily.  
+It’s designed for use in conferences, classrooms, and other real-time situations.
+
+While there are many great transcription apps with advanced AI features, I wanted something much simpler — just live transcription and a history of past transcriptions, without unnecessary complexity.
+
+## 🚀 Features
+
+- Real-time transcription updates via WebSockets
+- Integration with backend authentication (JWT or session-based)
+- Authentication tokens managed in the BFF (Route Handler) for improved security
+- Ability to save and view transcription history
+- Responsive UI built with shadcn and Tailwind CSS
+
+## 🛠 Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **State Management:** Zustand
+- **Styling:** Shadcn, Tailwind CSS
+- **API Integration:** Fetch API with route handlers
+
+---
+
+## 📦 Installation
+
+```bash
+git clone <frontend-repo-url>
+cd frontend
+npm install
+```
+
+## ▶️ Running Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+By default, it runs on `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚙️ Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env` file with:
 
-## Learn More
+```
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+NEXT_PUBLIC_WS_URL=ws://localhost:8000/ws/transcribe/
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 📄 API Contract
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+All API requests and responses follow this structure:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```json
+{
+  "data": { ... },
+  "error": null
+}
+```
 
-## Deploy on Vercel
+Errors will have the form:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```json
+{
+  "data": null,
+  "error": {
+    "code": "",
+    "message": "",
+    "details":  { ... },
+  }
+}
+```
