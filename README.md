@@ -32,8 +32,6 @@ While there are many great transcription apps with advanced AI features, I wante
 - **Styling:** Shadcn, Tailwind CSS
 - **API Integration:** Fetch API with route handlers
 
----
-
 ## 📦 Installation
 
 ```bash
