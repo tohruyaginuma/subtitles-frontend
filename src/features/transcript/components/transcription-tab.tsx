@@ -74,7 +74,10 @@ export const TranscriptionTab = () => {
         value={TAB_KEYS.LIVE}
         className="flex flex-col justify-center items-center"
       >
-        <Text isStrong className="relative top-[-25px] max-w-1/2 ">
+        <Text
+          isStrong
+          className="relative top-[-25px] lg:max-w-1/2 break-all whitespace-pre-wrap"
+        >
           {isRecording ? transcript : connectionStatus}
         </Text>
       </TabsContent>
