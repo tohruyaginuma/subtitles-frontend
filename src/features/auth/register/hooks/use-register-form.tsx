@@ -22,9 +22,9 @@ export function useRegisterForm() {
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     try {
-      const { error } = await registerService(values.email, values.password);
+      const response = await registerService(values.email, values.password);
 
-      if (error) {
+      if ("error" in response && response.error) {
         toast.error("Account creation failed.", {
           description: "Please try again.",
         });

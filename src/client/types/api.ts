@@ -3,6 +3,7 @@ export type Options = {
   body?: unknown;
   headers?: Record<string, string>;
   timeoutMs?: number;
+  isAuth?: boolean;
 };
 
 export type ResponseError = {
@@ -13,7 +14,11 @@ export type ResponseError = {
 
 export type DeleteResponse = null;
 
-export type ApiEnvelope<T> = {
-  data: T | null;
-  error: ResponseError | null;
+export type ApiResult<T> = T | { error: ResponseError };
+
+export type PaginationResponse<T> = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
 };

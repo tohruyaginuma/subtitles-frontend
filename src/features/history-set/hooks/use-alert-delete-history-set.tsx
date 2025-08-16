@@ -8,9 +8,10 @@ export const useAlertDeleteHistorySet = (callback: () => void) => {
 
   const onClickDeleteHistorySet = async () => {
     try {
-      const { error } = await deleteHistorySetService(historySetId);
-      if (error) {
-        console.error("error", error);
+      const response = await deleteHistorySetService(historySetId);
+
+      if (response && "error" in response && response.error) {
+        console.error("error", response.error);
         toast.error("Failed to delete history set");
         return;
       }

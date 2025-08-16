@@ -1,4 +1,4 @@
-import { ApiEnvelope, Options } from "@/client/types/api";
+import { ApiResult, Options } from "@/client/types/api";
 import { TIMEOUT_MS } from "@/client/constants/api";
 import {
   ERROR_CODES,
@@ -15,7 +15,7 @@ let refreshingPromise: Promise<boolean> | null = null;
 const refreshOnce = async (): Promise<boolean> => {
   try {
     const response = await refreshTokenService();
-    if (response.error) return false;
+    if ("error" in response && response.error) return false;
 
     return true;
   } catch {
@@ -39,8 +39,9 @@ export const apiClient = async <T = unknown>(
     body,
     headers: baseHeaders = { Accept: "application/json" },
     timeoutMs = TIMEOUT_MS,
+    isAuth = true,
   }: Options = {}
-): Promise<ApiEnvelope<T>> => {
+): Promise<ApiResult<T>> => {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
 
@@ -61,7 +62,7 @@ export const apiClient = async <T = unknown>(
   try {
     let response = await fetch(path, requestOptions);
 
-    if (response.status === HTTP_STATUS.UNAUTHORIZED) {
+    if (isAuth && response.status === HTTP_STATUS.UNAUTHORIZED) {
       const refreshed = await ensureRefreshed();
 
       if (refreshed) {
@@ -73,14 +74,11 @@ export const apiClient = async <T = unknown>(
       }
     }
 
-    const json = (await toJsonSafe(response)) as ApiEnvelope<T> | null;
-
-    return json ?? { data: null, error: null };
+    return (await toJsonSafe(response)) as ApiResult<T>;
   } catch (e) {
     const aborted = e instanceof Error && e.name === "AbortError";
 
     return {
-      data: null,
       error: {
         code: aborted ? ERROR_CODES.TIMEOUT : ERROR_CODES.NETWORK_ERROR,
         message: aborted

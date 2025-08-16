@@ -15,17 +15,19 @@ export const useHistorySetPage = () => {
     setIsLoading(true);
 
     try {
-      const { data, error } = await listHistorySetService();
+      const response = await listHistorySetService();
 
-      if (error) {
+      if ("error" in response && response.error) {
         toast.error("Failed to fetch history set list.", {
-          description: error?.message,
+          description: response.error.message,
         });
 
         return;
       }
 
-      setHistorySetList(data as HistorySetResponse[]);
+      if ("results" in response) {
+        setHistorySetList(response.results as HistorySetResponse[]);
+      }
     } catch (error) {
       const responseError = error as ResponseError;
       toast.error("Failed to fetch history set list.", {

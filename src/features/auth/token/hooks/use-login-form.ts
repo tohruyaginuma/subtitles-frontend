@@ -28,24 +28,22 @@ export function useLoginForm() {
     };
 
     try {
-      const { error: loginErr } = await loginService(
-        values.email,
-        values.password
-      );
-
-      if (loginErr) {
-        fail(loginErr.message ?? "Login failed.");
+      const loginResponse = await loginService(values.email, values.password);
+      if (loginResponse && "error" in loginResponse && loginResponse.error) {
+        fail(loginResponse.error.message ?? "Login failed.");
         return;
       }
 
-      const { data: meData, error: meError } = await meService();
+      const meResponse = await meService();
 
-      if (meError || !meData?.email) {
-        fail(meError?.message ?? "Login failed.");
+      if (meResponse && "error" in meResponse && meResponse.error) {
+        fail(meResponse.error.message ?? "Login failed.");
         return;
       }
 
-      login({ email: meData.email });
+      if ("email" in meResponse) {
+        login({ email: meResponse.email });
+      }
 
       onClose();
       toast.success("Login successful.");

@@ -18,43 +18,31 @@ export const useHistoriesPage = (historySetId: string) => {
     setIsLoadingHistories(true);
 
     try {
-      const [setRes, listRes] = await Promise.all([
+      const [historySetResponse, historiesResponse] = await Promise.all([
         retrieveHistorySetService(historySetId),
         listHistoryService(historySetId),
       ]);
 
-      if (setRes.error) {
+      if ("error" in historySetResponse && historySetResponse.error) {
         toast.error("Failed to fetch history set.", {
-          description: setRes.error.message,
+          description: historySetResponse.error.message,
         });
-        throw new Error(setRes.error.message);
+        throw new Error(historySetResponse.error.message);
       }
 
-      if (!setRes.data) {
-        toast("History set not found", { description: "Please try again." });
-        throw new Error("History set not found");
+      if ("id" in historySetResponse) {
+        setHistorySet(historySetResponse);
       }
 
-      setHistorySet(setRes.data);
-
-      if (listRes.error) {
+      if ("error" in historiesResponse && historiesResponse.error) {
         toast.error("Failed to fetch histories.", {
-          description: listRes.error.message,
+          description: historiesResponse.error.message,
         });
       }
-      setHistories((listRes.data ?? []) as HistoryResponse[]);
-      if (!setRes.data) {
-        toast("History set not found", { description: "Please try again." });
-        throw new Error("History set not found");
-      }
-      setHistorySet(setRes.data);
 
-      if (listRes.error) {
-        toast.error("Failed to fetch histories.", {
-          description: listRes.error.message,
-        });
+      if ("results" in historiesResponse) {
+        setHistories(historiesResponse.results as HistoryResponse[]);
       }
-      setHistories((listRes.data ?? []) as HistoryResponse[]);
     } catch (error) {
       console.error(error);
     } finally {

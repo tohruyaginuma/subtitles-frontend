@@ -18,8 +18,9 @@ export function useLogoutAlert() {
     setIsLoading(true);
 
     try {
-      const { error } = await logoutService();
-      if (error) {
+      const response = await logoutService();
+
+      if (response && "error" in response && response.error) {
         toast.error("Logout failed.");
         return;
       }

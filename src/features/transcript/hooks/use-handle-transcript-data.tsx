@@ -13,16 +13,16 @@ export const useHandleTranscriptData = () => {
   const createHistorySet = useCallback(async (_title?: string) => {
     try {
       const title = _title || `Subtitle of ${dayjs().format(DATE_FORMAT)}`;
-      const { data, error } = await createHistorySetService({ title });
+      const response = await createHistorySetService({ title });
 
-      if (error) {
-        console.error("error", error);
+      if ("error" in response && response.error) {
+        console.error("error", response.error);
         toast.error("Failed to create history set");
       }
 
-      if (data) {
-        setHistorySetId(data.id);
-        return data.id;
+      if ("id" in response) {
+        setHistorySetId(response.id);
+        return response.id;
       }
     } catch (error) {
       console.error("error", error);
@@ -41,18 +41,14 @@ export const useHandleTranscriptData = () => {
       if (!contentTrimmed) return;
 
       try {
-        const { data, error } = await createHistoryService({
+        const response = await createHistoryService({
           id: historySetId,
           content: contentTrimmed,
         });
 
-        if (error) {
-          console.error("error", error);
+        if ("error" in response && response.error) {
+          console.error("error", response.error);
           toast.error("Failed to update history set");
-        }
-
-        if (data) {
-          console.log("data", data);
         }
       } catch (error) {
         console.error("error", error);

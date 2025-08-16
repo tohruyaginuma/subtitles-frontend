@@ -26,18 +26,15 @@ export const useFormEditHistorySet = (callback: () => void) => {
     try {
       if (!historySetId) throw new Error("History set ID is required");
 
-      const { error } = await patchHistorySetService(
-        historySetId,
-        values.title
-      );
+      const response = await patchHistorySetService(historySetId, values.title);
 
-      if (error) {
+      if ("error" in response && response.error) {
         form.setError("title", {
           message: "Error updating history set.",
         });
 
         toast.error("Error updating history set.", {
-          description: error?.message,
+          description: response.error.message,
         });
 
         return;
