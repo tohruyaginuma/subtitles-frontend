@@ -34,7 +34,6 @@ export const apiClient = async (
     if (!accessToken) {
       return NextResponse.json(
         {
-          data: null,
           error: {
             code: ERROR_CODES.UNAUTHORIZED,
             message: ERROR_MESSAGES.UNAUTHORIZED,

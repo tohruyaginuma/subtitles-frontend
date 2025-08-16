@@ -24,7 +24,6 @@ export async function POST() {
   if (!refreshToken) {
     return NextResponse.json(
       {
-        data: null,
         error: {
           code: ERROR_CODES.UNAUTHORIZED,
           message: ERROR_MESSAGES.UNAUTHORIZED,
