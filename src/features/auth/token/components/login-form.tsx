@@ -26,7 +26,7 @@ export function LoginForm() {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="shadcn"
+                  placeholder="example@example.com"
                   {...field}
                   type="email"
                   autoComplete="email"
