@@ -10,7 +10,7 @@ import { DialogEditHistorySet } from "@/features/history-set/components/dialog-e
 import { useHistorySetPage } from "@/features/history-set/hooks/use-history-set-page";
 
 export default function HistorySetPage() {
-  const { historySetList, isLoading, breadcrumbItems, fetch } =
+  const { historySetList, isLoading, breadcrumbItems, ref, refetch } =
     useHistorySetPage();
 
   return (
@@ -20,13 +20,14 @@ export default function HistorySetPage() {
       <Contents>
         <Heading as="h2">Subtitle Histories</Heading>
         <HistorySetTable
+          ref={ref}
           historySetList={historySetList}
           isLoading={isLoading}
         />
       </Contents>
 
-      <AlertDeleteHistorySet callback={fetch} />
-      <DialogEditHistorySet callback={fetch} />
+      <AlertDeleteHistorySet callback={refetch} />
+      <DialogEditHistorySet callback={refetch} />
     </>
   );
 }

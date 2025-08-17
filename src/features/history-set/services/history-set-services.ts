@@ -4,15 +4,14 @@ import { HistorySetResponse } from "@/features/history-set/types/history-set";
 import { API_ROUTES } from "@/client/constants/api";
 import { DeleteResponse } from "@/client/types/api";
 
-export const listHistorySetService = (): Promise<
-  ApiResult<PaginationResponse<HistorySetResponse>>
-> => {
-  return apiClient<PaginationResponse<HistorySetResponse>>(
-    API_ROUTES.historySet,
-    {
-      method: "GET",
-    }
-  );
+export const listHistorySetService = ({
+  nextUri,
+}: {
+  nextUri: string;
+}): Promise<ApiResult<PaginationResponse<HistorySetResponse>>> => {
+  return apiClient<PaginationResponse<HistorySetResponse>>(nextUri, {
+    method: "GET",
+  });
 };
 
 export const retrieveHistorySetService = (
