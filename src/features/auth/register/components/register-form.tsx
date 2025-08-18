@@ -11,6 +11,7 @@ import {
 } from "@/client/components/ui/form";
 import { Input } from "@/client/components/ui/input";
 import { useRegisterForm } from "@/features/auth/register/hooks/use-register-form";
+import { Spinner } from "@/client/components/spinner";
 
 export function RegisterForm() {
   const { form, onSubmit } = useRegisterForm();
@@ -80,6 +81,7 @@ export function RegisterForm() {
           className="w-full md:w-auto"
           disabled={!form.formState.isValid || form.formState.isSubmitting}
         >
+          {form.formState.isSubmitting && <Spinner />}
           Register
         </Button>
       </form>

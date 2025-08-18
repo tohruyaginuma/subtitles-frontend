@@ -11,6 +11,7 @@ import {
 } from "@/client/components/ui/form";
 import { Input } from "@/client/components/ui/input";
 import { useLoginForm } from "@/features/auth/token/hooks/use-login-form";
+import { Spinner } from "@/client/components/spinner";
 
 export function LoginForm() {
   const { form, onSubmit } = useLoginForm();
@@ -61,6 +62,7 @@ export function LoginForm() {
           className="w-full md:w-auto"
           disabled={!form.formState.isValid || form.formState.isSubmitting}
         >
+          {form.formState.isSubmitting && <Spinner />}
           Login
         </Button>
       </form>
