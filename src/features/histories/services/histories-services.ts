@@ -3,15 +3,14 @@ import { HistoryResponse } from "@/features/histories/types/histories";
 import { API_ROUTES } from "@/client/constants/api";
 import { apiClient } from "@/client/lib/api";
 
-export const listHistoryService = (
-  id: string
-): Promise<ApiResult<PaginationResponse<HistoryResponse>>> => {
-  return apiClient<PaginationResponse<HistoryResponse>>(
-    API_ROUTES.history(id),
-    {
-      method: "GET",
-    }
-  );
+export const listHistoryService = ({
+  nextUri,
+}: {
+  nextUri: string;
+}): Promise<ApiResult<PaginationResponse<HistoryResponse>>> => {
+  return apiClient<PaginationResponse<HistoryResponse>>(nextUri, {
+    method: "GET",
+  });
 };
 
 export const createHistoryService = ({

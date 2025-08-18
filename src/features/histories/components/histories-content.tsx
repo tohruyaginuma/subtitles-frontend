@@ -10,6 +10,7 @@ import { HistoryResponse } from "@/features/histories/types/histories";
 import { HistorySetResponse } from "@/features/history-set/types/history-set";
 import { Skeleton } from "@/client/components/ui/skeleton";
 import { SKELETON_LENGTH } from "@/features/histories/constants/histories-constants";
+import { forwardRef } from "react";
 
 type Props = {
   isLoadingHistorySet: boolean;
@@ -18,59 +19,72 @@ type Props = {
   isLoadingHistories: boolean;
 };
 
-export const HistoriesContent = ({
-  isLoadingHistorySet,
-  historySet,
-  histories,
-  isLoadingHistories,
-}: Props) => {
-  return (
-    <>
-      <Contents>
-        <Flex gap="small" align="center" justify="between" isFullWidth>
-          <Heading as="h2" className="w-full">
-            {isLoadingHistorySet ? (
-              <Skeleton className="h-8 w-1/3" />
+export const HistoriesContent = forwardRef<HTMLDivElement, Props>(
+  ({ isLoadingHistorySet, historySet, histories, isLoadingHistories }, ref) => {
+    return (
+      <>
+        <Contents>
+          <Flex gap="small" align="center" justify="between" isFullWidth>
+            <Heading as="h2" className="w-full">
+              {isLoadingHistorySet ? (
+                <Skeleton className="h-8 w-1/3" />
+              ) : (
+                historySet?.title
+              )}
+            </Heading>
+            <Flex gap="small" align="center">
+              {!isLoadingHistorySet && historySet && (
+                <>
+                  <ButtonEditHistorySet historySet={historySet} />
+                  <ButtonDeleteHistorySet historySet={historySet} />
+                </>
+              )}
+            </Flex>
+          </Flex>
+          <Flex vertical isFullWidth>
+            {isLoadingHistories && histories?.length === 0 ? (
+              Array.from({ length: SKELETON_LENGTH }).map((_, index) => (
+                <SubtitleLog
+                  sentence={""}
+                  key={index}
+                  hasBackground={index % 2 === 0}
+                  isLoading={isLoadingHistories}
+                />
+              ))
             ) : (
-              historySet?.title
-            )}
-          </Heading>
-          <Flex gap="small" align="center">
-            {!isLoadingHistorySet && historySet && (
               <>
-                <ButtonEditHistorySet historySet={historySet} />
-                <ButtonDeleteHistorySet historySet={historySet} />
+                {histories && histories.length > 0 ? (
+                  histories.map((history: HistoryResponse, index: number) => (
+                    <SubtitleLog
+                      sentence={history.content}
+                      key={index}
+                      hasBackground={index % 2 === 0}
+                    />
+                  ))
+                ) : (
+                  <SubtitleLog
+                    sentence={"No histories"}
+                    hasBackground={false}
+                  />
+                )}
+                {isLoadingHistories &&
+                  histories?.length === 0 &&
+                  Array.from({ length: SKELETON_LENGTH }).map((_, index) => (
+                    <SubtitleLog
+                      sentence={""}
+                      key={index}
+                      hasBackground={index % 2 === 0}
+                      isLoading={isLoadingHistories}
+                    />
+                  ))}
+                <div ref={ref} />
               </>
             )}
           </Flex>
-        </Flex>
-        <Flex vertical isFullWidth>
-          {isLoadingHistories ? (
-            Array.from({ length: SKELETON_LENGTH }).map((_, index) => (
-              <SubtitleLog
-                sentence={""}
-                key={index}
-                hasBackground={index % 2 === 0}
-                isLoading={isLoadingHistories}
-              />
-            ))
-          ) : (
-            <>
-              {histories && histories.length > 0 ? (
-                histories.map((history: HistoryResponse, index: number) => (
-                  <SubtitleLog
-                    sentence={history.content}
-                    key={index}
-                    hasBackground={index % 2 === 0}
-                  />
-                ))
-              ) : (
-                <SubtitleLog sentence={"No histories"} hasBackground={false} />
-              )}
-            </>
-          )}
-        </Flex>
-      </Contents>
-    </>
-  );
-};
+        </Contents>
+      </>
+    );
+  }
+);
+
+HistoriesContent.displayName = "HistoriesContent";

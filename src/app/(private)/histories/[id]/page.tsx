@@ -20,8 +20,9 @@ export default function HistoriesPage({ params }: Props) {
     historySet,
     histories,
     breadcrumbItems,
-    fetch,
+    fetchHistorySet,
     redirectToHistorySetPage,
+    ref,
   } = useHistoriesPage(id);
 
   return (
@@ -29,13 +30,14 @@ export default function HistoriesPage({ params }: Props) {
       <Header />
       <Breadcrumb items={breadcrumbItems} isLoading={isLoadingHistories} />
       <HistoriesContent
+        ref={ref}
         isLoadingHistorySet={isLoadingHistorySet}
         historySet={historySet}
         histories={histories}
         isLoadingHistories={isLoadingHistories}
       />
       <AlertDeleteHistorySet callback={redirectToHistorySetPage} />
-      <DialogEditHistorySet callback={fetch} />
+      <DialogEditHistorySet callback={fetchHistorySet} />
     </>
   );
 }

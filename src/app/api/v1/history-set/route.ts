@@ -4,13 +4,14 @@ import { getServerEnv } from "@/shared/constants/config";
 import { apiClient } from "@/bff/lib/api-client";
 import { networkErrorResponse } from "@/bff/lib/response";
 import { NextResponse } from "next/server";
+import { PAGINATION_LIMIT, PAGINATION_OFFSET } from "@/bff/constants/auth";
 
 export async function GET(request: Request) {
   const { API_ROOT_V1 } = getServerEnv();
 
   const { searchParams } = new URL(request.url);
-  const limit = searchParams.get("limit") ?? "10";
-  const offset = searchParams.get("offset") ?? "0";
+  const limit = searchParams.get("limit") ?? PAGINATION_LIMIT;
+  const offset = searchParams.get("offset") ?? PAGINATION_OFFSET;
 
   try {
     const response = await apiClient(
@@ -26,7 +27,9 @@ export async function GET(request: Request) {
         : undefined,
     };
 
-    return NextResponse.json(newResponse);
+    return NextResponse.json(newResponse, {
+      status: response.status,
+    });
   } catch (error) {
     return networkErrorResponse(error);
   }
