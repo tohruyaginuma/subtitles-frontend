@@ -41,7 +41,7 @@ export async function POST() {
     });
 
     const responseData = await response.json();
-    const { access: accessTokenNew } = responseData.data;
+    const { access: accessTokenNew } = responseData;
 
     const responseNext = NextResponse.json(responseData, {
       status: response.status,
