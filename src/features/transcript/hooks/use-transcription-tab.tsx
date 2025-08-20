@@ -48,11 +48,11 @@ export const useTranscriptionTab = () => {
     if (isRecording) return;
 
     if (isAuthenticated) {
-      await initializeHistorySetId(); // 念のため初期化
-      const id = await createHistorySet(); // ← ここで ID を作って「待つ」
+      await initializeHistorySetId();
+      const id = await createHistorySet();
       if (!id) {
         toast.error("Failed to create history set");
-        return; // ID なしなら開始しない
+        return;
       }
     }
 

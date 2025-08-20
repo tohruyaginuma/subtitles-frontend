@@ -46,7 +46,7 @@ export const useHandleTranscriptData = () => {
           content: contentTrimmed,
         });
 
-        if ("error" in response && response.error) {
+        if (response && "error" in response && response.error) {
           console.error("error", response.error);
           toast.error("Failed to update history set");
         }
