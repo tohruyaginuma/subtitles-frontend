@@ -6,7 +6,6 @@ import { useUserStore } from "@/features/auth/me/stores/use-user-store";
 import { useLoginDialogStore } from "@/features/auth/token/stores/use-login-dialog-store";
 import { loginService } from "@/features/auth/token/services/login-services";
 import { toast } from "sonner";
-import { meService } from "@/features/auth/me/services/me-services";
 
 export function useLoginForm() {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -34,15 +33,8 @@ export function useLoginForm() {
         return;
       }
 
-      const meResponse = await meService();
-
-      if (meResponse && "error" in meResponse && meResponse.error) {
-        fail(meResponse.error.message ?? "Login failed.");
-        return;
-      }
-
-      if ("email" in meResponse) {
-        login({ email: meResponse.email });
+      if ("email" in loginResponse) {
+        login({ email: loginResponse.email });
       }
 
       onClose();
