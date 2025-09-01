@@ -20,9 +20,27 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Subtitles",
-  description: "Subtitles is a helper for listening to English",
+  description:
+    "Real-time subtitles and notes to keep you engaged in conferences.",
   icons: {
     icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: "Subtitles",
+    description:
+      "Real-time subtitles and notes to keep you engaged in conferences.",
+    url: "https://subtitles-frontend-production.up.railway.app/",
+    siteName: "Subtitles",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Subtitles OG Image",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
   },
 };
 
