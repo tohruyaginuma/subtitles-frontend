@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "Subtitles",
     images: [
       {
-        url: "/og.png",
+        url: "https://subtitles-frontend-production.up.railway.app/og.png",
         width: 1200,
         height: 630,
         alt: "Subtitles OG Image",
